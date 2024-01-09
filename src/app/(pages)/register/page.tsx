@@ -1,13 +1,43 @@
+"use client"
+import { useCreateUserMutation } from "@/app/redux/features/user/userApi";
 import Link from "next/link";
-import React from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+type FormValues = {
+  name: string
+  email: string;
+  password: string;
+  confirmPassword: string;
+  address: string
+};
 
 const RegisterPage = () => {
+  const [createUser] = useCreateUserMutation();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormValues>();
+
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    try {
+      console.log("data", data);
+      const res = await createUser(data).unwrap();
+
+      console.log(res);
+      
+    } catch (err: any) {
+      console.error(err.message);
+    }
+  };
+
   return (
     <div className="bg-gray-100 flex flex-col items-center justify-center h-screen">
       <div className="bg-white p-4 md:p-8 rounded shadow-md w-[80%] md:w-96">
         <h2 className="text-2xl font-semibold mb-6">Register</h2>
 
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
             <label
               htmlFor="name"
@@ -18,7 +48,7 @@ const RegisterPage = () => {
             <input
               type="text"
               id="name"
-              name="name"
+              {...register("name", { required: true })}
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
             />
           </div>
@@ -32,7 +62,7 @@ const RegisterPage = () => {
             <input
               type="email"
               id="email"
-              name="email"
+              {...register("email", { required: true })}
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
             />
           </div>
@@ -47,7 +77,22 @@ const RegisterPage = () => {
             <input
               type="password"
               id="password"
-              name="password"
+              {...register("password", { required: true })}
+              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label
+              htmlFor="confirmPassword"
+              className="block text-gray-600 text-sm font-medium mb-2"
+            >
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              id="confirmPassword"
+              {...register("confirmPassword", { required: true })}
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
             />
           </div>
@@ -62,7 +107,7 @@ const RegisterPage = () => {
             <input
               type="text"
               id="address"
-              name="address"
+              {...register("address", { required: true })}
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
             />
           </div>

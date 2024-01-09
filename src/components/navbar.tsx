@@ -5,6 +5,9 @@ import { IoMdCart } from "react-icons/io";
 import { FaCartShopping } from "react-icons/fa6";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { MdClose } from "react-icons/md";
+import { useGetUserQuery } from "@/app/redux/features/user/userApi";
+import { setLoggedInfo } from "@/app/redux/features/user/userSlice";
+import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,6 +15,14 @@ const Navbar = () => {
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
+
+  const { data: InfoData, isSuccess } = useGetUserQuery(undefined);
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.user);
+
+  if (isSuccess) {
+    dispatch(setLoggedInfo(InfoData?.data));
+  }
 
   return (
     <nav className="shadow-md py-4 scroll-m-0">
@@ -33,9 +44,11 @@ const Navbar = () => {
             <div className="flex items-center gap-5">
               <FaCartShopping />
               <div className="">
-                <Link href="/login" className="bg-light px-3 py-2 rounded-md">
-                  Sign in
-                </Link>
+                {user?.email ? <div className="">{user?.name}</div> : (
+                  <Link href="/login" className="bg-light px-3 py-2 rounded-md">
+                    Sign in
+                  </Link>
+                )}
               </div>
             </div>
           </div>

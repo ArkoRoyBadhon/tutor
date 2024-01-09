@@ -1,24 +1,59 @@
+"use client";
+
+import { useLoginUserMutation } from "@/app/redux/features/user/userApi";
 import Link from "next/link";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 
+type FormValues = {
+  email: string;
+  password: string;
+};
+
 const LoginPage = () => {
+  const [userLogin] = useLoginUserMutation();
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormValues>();
+
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    try {
+      // console.log("data", data);
+      const res = await userLogin(data).unwrap();
+
+      console.log(res);
+      // if (res?.accessToken) {
+      //   // router.push("/");
+      //   // message.success("User logged in successfully!");
+      //   console.log("log success");
+      // }
+      // storeUserInfo({ accessToken: res?.accessToken });
+    } catch (err: any) {
+      console.error(err.message);
+    }
+  };
+
   return (
     <div className="bg-gray-100 flex flex-col items-center justify-center h-screen">
       <div className="bg-white p-4 md:p-8 rounded shadow-md w-[80%] md:w-96">
         <h2 className="text-2xl font-semibold mb-6">Login</h2>
 
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
             <label
               htmlFor="username"
               className="block text-gray-600 text-sm font-medium mb-2"
             >
-              Username
+              Email
             </label>
             <input
-              type="text"
-              id="username"
-              name="username"
+              type="email"
+              id="email"
+              {...register("email", { required: true })}
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
             />
           </div>
@@ -33,7 +68,7 @@ const LoginPage = () => {
             <input
               type="password"
               id="password"
-              name="password"
+              {...register("password", { required: true })}
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
             />
           </div>
@@ -53,7 +88,10 @@ const LoginPage = () => {
         </div>
       </div>
       <div className="mt-5">
-        Not an account? <Link className="font-bold text-deep" href="/register">Register</Link>
+        Not an account?{" "}
+        <Link className="font-bold text-deep" href="/register">
+          Register
+        </Link>
       </div>
     </div>
   );
