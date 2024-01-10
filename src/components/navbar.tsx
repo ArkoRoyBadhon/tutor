@@ -5,18 +5,25 @@ import { IoMdCart } from "react-icons/io";
 import { FaCartShopping } from "react-icons/fa6";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { MdClose } from "react-icons/md";
-import { useGetUserQuery } from "@/app/redux/features/user/userApi";
+import {
+  useGetUserQuery,
+  useLogOutMutation,
+} from "@/app/redux/features/user/userApi";
 import { setLoggedInfo } from "@/app/redux/features/user/userSlice";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
-  const toggleNavbar = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const { data: InfoData, isSuccess } = useGetUserQuery(undefined);
+  const {
+    data: InfoData,
+    isSuccess,
+    isError,
+    refetch,
+  } = useGetUserQuery(undefined);
+  const [logOut] = useLogOutMutation();
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.user);
 
@@ -24,11 +31,20 @@ const Navbar = () => {
     dispatch(setLoggedInfo(InfoData?.data));
   }
 
+  const handleLogout = async () => {
+    await logOut(undefined);
+  };
+
+  if (isError) {
+    dispatch(setLoggedInfo(null));
+    router.push("/login");
+  }
+
   return (
     <nav className="shadow-md py-4 scroll-m-0">
       <div className="px-10 md:container relative">
         <div className={`flex justify-between items-center`}>
-          <div className="">Your Logo</div>
+          <div className="font-bold">Tutor House</div>
           <div className="md:flex hidden">
             <ul className="flex gap-5">
               <li className="cursor-pointer">
@@ -44,9 +60,31 @@ const Navbar = () => {
             <div className="flex items-center gap-5">
               <FaCartShopping />
               <div className="">
-                {user?.email ? <div className="">{user?.name}</div> : (
-                  <Link href="/login" className="bg-light px-3 py-2 rounded-md">
+                {user?.email ? (
+                  <div className="">{user?.name}</div>
+                ) : (
+                  <Link
+                    href="/login"
+                    className="bg-light px-3 py-2 rounded-md cursor-pointer"
+                  >
                     Sign in
+                  </Link>
+                )}
+              </div>
+              <div className="">
+                {user?.email ? (
+                  <div
+                    className="cursor-pointer bg-light px-3 py-2 rounded-md"
+                    onClick={() => handleLogout()}
+                  >
+                    LogOut
+                  </div>
+                ) : (
+                  <Link
+                    href="/register"
+                    className="bg-light px-3 py-2 rounded-md cursor-pointer"
+                  >
+                    Sign Up
                   </Link>
                 )}
               </div>

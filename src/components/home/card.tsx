@@ -1,6 +1,9 @@
+"use client"
 import Image from "next/image";
+import Link from "next/link";
 
-const Card = () => {
+const Card = ({item}:any) => {
+
   return (
     <div className="w-[300px] h-[350px] shadow-md rounded-md">
       <Image
@@ -11,12 +14,22 @@ const Card = () => {
         alt="img"
       />
       <div className="p-3 text-[16px]">
-        <p className="font-semibold">John Carter</p>
-        <p className=""><span className="font-semibold">Experience: </span> 3 years</p>
-        <p className=""><span className="font-semibold">Gender: </span> Male</p>
-        <p className=""><span className="font-semibold">Address: </span>Dhaka</p>
-        <p className=""><span className="font-semibold">Institute: </span>Dhaka University</p>
-            <button className="bg-light hover:bg-deep px-3 py-1 rounded-md w-full hover:text-white transition-all ease-in">View</button>
+        <p className="font-semibold">{item?.name}</p>
+        <p className="">
+          <span className="font-semibold">Experience: </span> {item?.experience}
+        </p>
+        <p className="">
+          <span className="font-semibold">Gender: </span> {item?.gender}
+        </p>
+        <p className="">
+          <span className="font-semibold">Address: </span>{item?.address}
+        </p>
+        <p className="">
+          <span className="font-semibold">Institute: </span>{item?.institute || "N/A"} 
+        </p>
+        <Link href={`/single-service/${item?._id}`} className="bg-light hover:bg-deep px-3 py-1 rounded-md w-full hover:text-white transition-all ease-in">
+          View
+        </Link>
       </div>
     </div>
   );

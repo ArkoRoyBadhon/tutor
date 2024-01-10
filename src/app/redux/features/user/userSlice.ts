@@ -5,7 +5,7 @@ export interface IRootState {
     email: string | null;
     id: string | null;
     name: string | null;
-    role: string | null
+    role: string | null;
   };
   // accessToken: string | null;
 }
@@ -15,7 +15,7 @@ export const initialState: IRootState = {
     email: null,
     id: null,
     name: null,
-    role: null
+    role: null,
   },
   // accessToken: null,
 };
@@ -25,10 +25,10 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setLoggedInfo: (state, action) => {
-      state.user.email = action.payload.email;
-      state.user.id = action.payload._id;
-      state.user.name = action.payload.name;
-      state.user.role = action.payload.role;
+      state.user.email = action?.payload?.email || null;
+      state.user.id = action?.payload?._id || null;
+      state.user.name = action?.payload?.name || null;
+      state.user.role = action?.payload?.role || null;
     },
   },
 });

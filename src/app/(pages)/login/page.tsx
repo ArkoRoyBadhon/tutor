@@ -2,6 +2,7 @@
 
 import { useLoginUserMutation } from "@/app/redux/features/user/userApi";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 
@@ -12,6 +13,7 @@ type FormValues = {
 
 const LoginPage = () => {
   const [userLogin] = useLoginUserMutation();
+  const router = useRouter();
 
   const {
     register,
@@ -26,6 +28,7 @@ const LoginPage = () => {
       const res = await userLogin(data).unwrap();
 
       console.log(res);
+      router.push("/");
       // if (res?.accessToken) {
       //   // router.push("/");
       //   // message.success("User logged in successfully!");
