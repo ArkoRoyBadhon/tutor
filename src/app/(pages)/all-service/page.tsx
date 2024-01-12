@@ -1,6 +1,7 @@
 "use client";
 import { useGetAllTutorQuery } from "@/app/redux/features/tutor/tutorApi";
 import Card from "@/components/home/card";
+import Pagination from "@/components/pagination";
 import { useState } from "react";
 
 const AllServices = () => {
@@ -8,11 +9,19 @@ const AllServices = () => {
   const [searchVal, setSearchVal] = useState("");
   const [selectedGender, setSelectedGender] = useState<string>("");
   const [selectedClass, setSelectedClass] = useState<string>("");
+
+  const [pageNum, setPageNum] = useState("1");
+
   const {
     data: allTutor,
     isLoading,
     isSuccess,
-  } = useGetAllTutorQuery({ searchVal, selectedGender, selectedClass });
+  } = useGetAllTutorQuery({
+    searchVal,
+    selectedGender,
+    selectedClass,
+    pageNum,
+  });
 
   //   if (isLoading) {
   //     return <h1>Loading...</h1>;
@@ -26,10 +35,14 @@ const AllServices = () => {
     setSelectedGender(e.target.value);
   };
 
-  console.log("AA", allTutor);
+  const pageCount = Math.ceil(Number(allTutor?.data?.meta?.count) / Number(2));
+
+  const handlePageChange = (page: any) => {
+    setPageNum(page);
+  };
 
   return (
-    <div className="px-10 md:container">
+    <div className="px-10 md:container pb-5">
       <h3 className="font-semibold text-md mt-5">Filter Options</h3>
       <div className="h-fit py-5">
         <div className="flex outline w-[400px] rounded-md outline-1 outline-light">
@@ -103,6 +116,13 @@ const AllServices = () => {
           )}
         </div>
       )}
+
+      <div className="mt-10">
+        <div className="flex justify-center">
+          {}
+          <Pagination totalPages={pageCount} onPageChange={handlePageChange} />
+        </div>
+      </div>
     </div>
   );
 };

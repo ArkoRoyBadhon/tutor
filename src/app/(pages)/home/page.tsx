@@ -18,7 +18,7 @@ const HomePage = () => {
       <Events />
       <Overview />
       <ClientService />
-      <LatestNews />
+      {/* <LatestNews /> */}
     </div>
   );
 };
