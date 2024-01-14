@@ -42,7 +42,7 @@ const Navbar = () => {
 
   return (
     <nav className="shadow-md py-4 scroll-m-0">
-      <div className="px-10 md:container relative">
+      <div className="px-10 md:container relative overflow-hidden">
         <div className={`flex justify-between items-center`}>
           <div className="font-bold">Tutor House</div>
           <div className="md:flex hidden">
@@ -53,12 +53,16 @@ const Navbar = () => {
               <li className="cursor-pointer">
                 <Link href="/all-service">All Services</Link>
               </li>
-              {/* <li></li> */}
+              {user?.role === "admin" && (
+                <li className="cursor-pointer">
+                  <Link href="/dashboard">DashBoard</Link>
+                </li>
+              )}
             </ul>
           </div>
           <div className="hidden md:block">
             <div className="flex items-center gap-5">
-              <FaCartShopping />
+              <Link href="/cart"><FaCartShopping /></Link>
               <div className="">
                 {user?.email ? (
                   <div className="">{user?.name}</div>

@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "./card";
+import Card from "../shared/card";
 import Link from "next/link";
 
 const UpcomingService = () => {

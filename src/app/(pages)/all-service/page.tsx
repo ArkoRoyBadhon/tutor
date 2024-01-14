@@ -1,8 +1,10 @@
 "use client";
 import { useGetAllTutorQuery } from "@/app/redux/features/tutor/tutorApi";
-import Card from "@/components/home/card";
-import Pagination from "@/components/pagination";
+import Card from "@/components/shared/card";
+import SkeletonCard from "@/components/shared/skeletonCard";
+import Pagination from "@/components/utils/pagination";
 import { useState } from "react";
+
 
 const AllServices = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -98,7 +100,18 @@ const AllServices = () => {
       </div>
       <hr className="my-5 outline outline-b outline-1 outline-light" />
       <h3 className="font-semibold text-xl">Our Services</h3>
-      {isLoading && <div className="">Loading....</div>}
+      {isLoading && (
+        <div className="mt-5 ">
+          <SkeletonCard />
+          {/* <SkeletonCard /> */}
+        </div>
+        // <div className="mt-5 grid grid-cols-1 justify-items-center md:grid-cols-2 lg:grid-cols-4 gap-y-10 md:gap-x-10 gap-x-0">
+        //   <div className="">
+        //     <Skeleton className="h-20" />
+        //     <Skeleton count={5} />
+        //   </div>
+        // </div>
+      )}
       {isSuccess && (
         <div className="mt-5 grid grid-cols-1 justify-items-center md:grid-cols-2 lg:grid-cols-4 gap-y-10 md:gap-x-10 gap-x-0">
           {allTutor?.data?.data.length > 0 ? (
