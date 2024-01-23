@@ -1,12 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { DashboardData } from "./dashboardData";
 
 const DashbordMenu = () => {
   const [isUserVisible, setUserVisible] = useState(false);
   const [isUVisible, setUVisible] = useState(false);
   const [isTutorVisible, setTutorVisible] = useState(false);
   const [isTVisible, setTVisible] = useState(false);
+  const [position, setPosition] = useState(40);
+  const [dashItem, setDashItem] = useState("all-user");
+
 
   const toggleSubMenu = (sub: string) => {
     if (sub === "user") setUVisible(!isUserVisible);
@@ -15,39 +19,38 @@ const DashbordMenu = () => {
     if (sub === "tutor") setTVisible(!isTVisible);
   };
 
-  const [position, setPosition] = useState(40);
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
       // Set position based on scroll position
-      console.log("scroll", scrollY);
+      // console.log("scroll", scrollY);
 
       if (scrollY >= 280) {
         setPosition(0);
-        console.log("trigger");
+        // console.log("trigger");
       } else if (scrollY < 280) {
         setPosition(40);
-        console.log("not trigger");
+        // console.log("not trigger");
       }
     };
-
-    // Attach the event listener when the component mounts
     window.addEventListener("scroll", handleScroll);
-
-    // Clean up the event listener when the component unmounts
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
-  console.log("pos", position);
+
+  const element = DashboardData?.filter((item) => item?.id === dashItem)
+
+  // console.log(element);
+  
 
   return (
-    <div className="mt-5 flex mb-10">
+    <div className="mt-5 flex flex-col md:flex-row gap-10 md:gap-0 mb-10">
       <div className="w-[30%]">
-        <div className={`fixed top-${position} flex flex-col`}>
-          <div className="inline-block outline outline-b-1 outline-white h-fit bg-light w-[400px]">
+        <div className={`md:fixed top-${position} flex flex-col`}>
+          <div className="inline-block outline outline-b-1 outline-white h-fit w-[90vw] md:w-[22vw] lg:w-[24vw] xl:w-[400px] overflow-hidden">
             <button
               className="bg-blue-500 w-full text-white px-4 py-2 cursor-pointer "
               onClick={() => toggleSubMenu("user")}
@@ -58,22 +61,24 @@ const DashbordMenu = () => {
               <div
                 className={` ${
                   isUVisible ? "h-0" : "h-20"
-                } transition-all ease-in`}
+                } transition-all ease-in bg-light`}
               >
                 <div
                   className={`absolute w-full transition-all ease-in ${
-                    isUserVisible ? "top-[-100px]" : "top-0"
+                    isUserVisible ? "top-[-100px]" : "top-0 md:top-0"
                   }`}
                 >
-                  <button className="px-4 py-2 w-full hover:bg-lighter transition-all ease-in">View</button>
-                  <button className="px-4 py-2 w-full hover:bg-lighter transition-all ease-in">
+                  <button onClick={()=> setDashItem("all-user")} className="px-4 py-2 w-full hover:bg-lighter transition-all ease-in">
+                    Add User
+                  </button>
+                  <button onClick={()=> setDashItem("all-user")} className="px-4 py-2 w-full hover:bg-lighter transition-all ease-in">
                     Manage User {/* create, delete, **make admin, */}
                   </button>
                 </div>
               </div>
             </div>
           </div>
-          <div className="inline-block outline outline-b-1 outline-white h-fit bg-light w-[400px]">
+          <div className="inline-block outline outline-b-1 outline-white h-fit bg-light w-[90vw] md:w-[22vw] lg:w-[24vw] xl:w-[400px]">
             <button
               className="bg-blue-500 w-full text-white px-4 py-2 cursor-pointer "
               onClick={() => toggleSubMenu("tutor")}
@@ -91,8 +96,10 @@ const DashbordMenu = () => {
                     isTutorVisible ? "top-[-100px]" : "top-0"
                   }`}
                 >
-                  <button className="px-4 py-2 w-full hover:bg-lighter transition-all ease-in">All Tutor</button>
                   <button className="px-4 py-2 w-full hover:bg-lighter transition-all ease-in">
+                    Add Tutor
+                  </button>
+                  <button onClick={()=> setDashItem("all-tutor")} className="px-4 py-2 w-full hover:bg-lighter transition-all ease-in">
                     Manage Tutor {/* create, delete, **make admin, */}
                   </button>
                 </div>
@@ -101,7 +108,18 @@ const DashbordMenu = () => {
           </div>
         </div>
       </div>
-      <div className="w-[70%] h-[200vh] bg-light flex-grow"></div>
+      <div className="w-[90vw] md:w-[60vw] lg:w-[70%] min-h-[100vh] bg-light flex-grow">
+        {
+          element.map((item) => {
+            return (
+              <div key={item.id} className="">
+                {item?.element}
+              </div>
+            )
+          })
+          
+        }
+      </div>
     </div>
   );
 };

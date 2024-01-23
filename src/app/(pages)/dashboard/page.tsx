@@ -7,7 +7,7 @@ import DashbordMenu from "@/components/dashboard/dashbordMenu";
 
 const DashboardPage = () => {
   return (
-    <div className="px-10 md:container min-h-[100vh]">
+    <div className="px-5 md:px-10 md:container min-h-[100vh] mx-auto">
       <h3 className="font-semibold text-md mt-5">Dashboard</h3>
       <div className="mt-5">
         <div className="flex justify-between">

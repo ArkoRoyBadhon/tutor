@@ -41,8 +41,8 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="shadow-md py-4 scroll-m-0">
-      <div className="px-10 md:container relative overflow-hidden">
+    <nav className="shadow-md py-4 scroll-m-0 mx-auto">
+      <div className="px-5 md:px-10 md:container relative">
         <div className={`flex justify-between items-center`}>
           <div className="font-bold">Tutor House</div>
           <div className="md:flex hidden">

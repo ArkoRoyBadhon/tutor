@@ -27,7 +27,7 @@ const LoginPage = () => {
       // console.log("data", data);
       const res = await userLogin(data).unwrap();
 
-      console.log(res);
+      // console.log(res);
       router.push("/");
       // if (res?.accessToken) {
       //   // router.push("/");
@@ -41,7 +41,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="bg-gray-100 flex flex-col items-center justify-center h-screen">
+    <div className="bg-gray-100 flex flex-col items-center justify-center h-screen mx-auto">
       <div className="bg-white p-4 md:p-8 rounded shadow-md w-[80%] md:w-96">
         <h2 className="text-2xl font-semibold mb-6">Login</h2>
 

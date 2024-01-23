@@ -11,7 +11,7 @@ const HomePage = () => {
   
 
   return (
-    <div className="py-10">
+    <div className="py-10 px-5 md:px-10 mx-auto">
       {/* <h1 className="text-red-200">Header</h1> */}
       <AvailableService />
       <UpcomingService />

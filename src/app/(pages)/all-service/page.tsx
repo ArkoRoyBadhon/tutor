@@ -44,7 +44,7 @@ const AllServices = () => {
   };
 
   return (
-    <div className="px-10 md:container pb-5">
+    <div className="px-5 md:px-10 md:container pb-5 mx-auto">
       <h3 className="font-semibold text-md mt-5">Filter Options</h3>
       <div className="h-fit py-5">
         <div className="flex outline w-[400px] rounded-md outline-1 outline-light">
@@ -118,7 +118,7 @@ const AllServices = () => {
             allTutor?.data?.data?.map((item: any) => {
               return (
                 <div key={item?._id} className="">
-                  <Card item={item} />
+                  {/* <Card item={item} /> */}
                 </div>
               );
             })

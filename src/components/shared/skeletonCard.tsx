@@ -34,24 +34,3 @@ const SkeletonCard = () => {
 };
 
 export default SkeletonCard;
-
-// import Skeleton from "react-loading-skeleton";
-// import "react-loading-skeleton/dist/skeleton.css";
-
-// const SkeletonCard = () => {
-//   const count = [1, 2, 3, 4];
-//   return (
-//     <div className="">
-//       {count.map((index: number) => {
-//         return (
-//           <div key={index} className="flex flex-col">
-//             <Skeleton containerClassName="flex-1" className="h-20" />
-//             <Skeleton containerClassName="flex-1" count={5} />
-//           </div>
-//         );
-//       })}
-//     </div>
-//   );
-// };
-
-// export default SkeletonCard;

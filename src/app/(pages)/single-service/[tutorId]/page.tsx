@@ -23,7 +23,7 @@ const SingleTutor = () => {
   console.log("singleTutor", singleTutor?.data);
 
   return (
-    <div className="px-10 md:container py-5">
+    <div className="px-5 md:px-10 md:container py-5 mx-auto">
       <div className="flex gap-10">
         <div className="w-[250px] outline outline-light h-60 rounded-md"></div>
         {/* <Image src={singleTutor?.data?.image} alt="img" height={500} width={500} /> */}
