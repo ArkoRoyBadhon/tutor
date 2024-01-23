@@ -13,7 +13,6 @@ interface User {
   }
   
   const EditModals: React.FC<EditModalsProps> = ({ EUser, setEditUser }) => {
-    console.log("aaaa", EUser);
   
     return (
         <div className="fixed top-[100px] h-[400px] bg-gray-200 shadow-md w-[400px] rounded-md overflow-hidden">

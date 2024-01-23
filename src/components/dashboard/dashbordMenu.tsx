@@ -11,14 +11,12 @@ const DashbordMenu = () => {
   const [position, setPosition] = useState(40);
   const [dashItem, setDashItem] = useState("all-user");
 
-
   const toggleSubMenu = (sub: string) => {
     if (sub === "user") setUVisible(!isUserVisible);
     if (sub === "user") setUserVisible(!isUserVisible);
     if (sub === "tutor") setTutorVisible(!isTutorVisible);
     if (sub === "tutor") setTVisible(!isTVisible);
   };
-
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,11 +38,9 @@ const DashbordMenu = () => {
     };
   }, []);
 
-
-  const element = DashboardData?.filter((item) => item?.id === dashItem)
+  const element = DashboardData?.filter((item) => item?.id === dashItem);
 
   // console.log(element);
-  
 
   return (
     <div className="mt-5 flex flex-col md:flex-row gap-10 md:gap-0 mb-10">
@@ -68,10 +64,16 @@ const DashbordMenu = () => {
                     isUserVisible ? "top-[-100px]" : "top-0 md:top-0"
                   }`}
                 >
-                  <button onClick={()=> setDashItem("all-user")} className="px-4 py-2 w-full hover:bg-lighter transition-all ease-in">
+                  <button
+                    onClick={() => setDashItem("add-user")}
+                    className="px-4 py-2 w-full hover:bg-lighter transition-all ease-in"
+                  >
                     Add User
                   </button>
-                  <button onClick={()=> setDashItem("all-user")} className="px-4 py-2 w-full hover:bg-lighter transition-all ease-in">
+                  <button
+                    onClick={() => setDashItem("all-user")}
+                    className="px-4 py-2 w-full hover:bg-lighter transition-all ease-in"
+                  >
                     Manage User {/* create, delete, **make admin, */}
                   </button>
                 </div>
@@ -96,10 +98,16 @@ const DashbordMenu = () => {
                     isTutorVisible ? "top-[-100px]" : "top-0"
                   }`}
                 >
-                  <button className="px-4 py-2 w-full hover:bg-lighter transition-all ease-in">
+                  <button
+                    onClick={() => setDashItem("add-tutor")}
+                    className="px-4 py-2 w-full hover:bg-lighter transition-all ease-in"
+                  >
                     Add Tutor
                   </button>
-                  <button onClick={()=> setDashItem("all-tutor")} className="px-4 py-2 w-full hover:bg-lighter transition-all ease-in">
+                  <button
+                    onClick={() => setDashItem("all-tutor")}
+                    className="px-4 py-2 w-full hover:bg-lighter transition-all ease-in"
+                  >
                     Manage Tutor {/* create, delete, **make admin, */}
                   </button>
                 </div>
@@ -109,16 +117,13 @@ const DashbordMenu = () => {
         </div>
       </div>
       <div className="w-[90vw] md:w-[60vw] lg:w-[70%] min-h-[100vh] bg-light flex-grow">
-        {
-          element.map((item) => {
-            return (
-              <div key={item.id} className="">
-                {item?.element}
-              </div>
-            )
-          })
-          
-        }
+        {element.map((item) => {
+          return (
+            <div key={item.id} className="">
+              {item?.element}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
